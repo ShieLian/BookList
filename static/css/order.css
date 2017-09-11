@@ -1,0 +1,14 @@
+body{
+  /*background-color: #d2d6de;*/
+  margin-top:0px;
+}
+
+.display_body{
+  width:80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ul.mui-list--inline>li{
+  vertical-align: middle;
+}

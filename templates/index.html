@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>订书</title>
+    <link rel="stylesheet" href="{{ css }}">
+    <script src="{{jquery}}" charset="utf-8"></script>
+  </head>
+  <body>
+    <div class="login-box">
+      <h2 style="text-align:center;">订书系统</h2>
+      <div class="login-dialog" id="login-dialog">
+        <form action="./login" method="post">
+          <div class="formcontrol">
+            <input type="text" name="username" id="username" placeholder="用户名">
+          </div>
+          <div class="formcontrol">
+            <input type="password" name="psw" id="psw" placeholder="密码">
+          </div>
+        </form>
+        <div class="formmisc">
+          <div class="button" style="display: inline-block;">
+            <button class="button" onclick="submit();">登录</button>
+          </div>
+          <div class="extralink" style="display: inline-block;margin-left: 7%;">
+            <a href="#" style="font-size: 14px;" id="btn_forgetpsw" onclick="forgetpsw();">忘记密码</a>
+            <a href='#' style="font-size: 14px;" id="btn_reg" onclick="reg();">注册</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      var state="login";
+      function forgetpsw(){
+        alert('蛤蛤蛤');
+      }
+      
+      function reg(){
+        $('button.button').html('注册');
+        $('div.extralink').remove();
+        $('div.formmisc').before('<div class="formcontrol"></div>')
+        $('div.formcontrol:last').html('<input type="password" name="psw_ensure" id="psw_ensure" placeholder="确认密码">')
+        $('form').attr('action','./register')
+        state="reg";
+      }
+      
+      function submit(){
+        if(!checkform())
+          return;
+        if(state=='login')
+          $.post(
+            $('form').attr('action'),
+            {username:$('#username').val(),
+             psw:$('#psw').val()},
+            login_callback,
+          );
+        else if(state=='reg')
+          $.post(
+            $('form').attr('action'),
+            {username:$('#username').val(),
+             psw:$('#psw').val(),
+            },
+            reg_callback,
+          );
+      }
+      
+      function login_callback(data){
+        var data=JSON.parse(data);
+        switch(data['status']){
+          case 'success':
+            window.location='./order.html';
+            break;
+          default:
+            alert(data['msg']);
+            break;
+        }
+      }
+
+      function reg_callback(data){
+        var data=JSON.parse(data);
+        switch(data['status']){
+          case 'success':
+            window.location='./login.html';
+            break;
+          default:
+            alert(data['msg']);
+            break;
+        }
+      }
+      
+      function checkform(){
+        var username=$('#username').val();
+        var psw=$('#psw').val();
+        if(state=="login"){
+          if(username.length<3 || username.match('^[a-zA-Z0-9_~!@#$%^&*-=+]*$')==null){
+            alert("用户名不正确");
+            return false;
+          }
+          if(psw.length<6 || psw.match('^[a-zA-Z0-9_~!@#$%^&*-=+]*$')==null){
+            alert("密码不正确");
+            return false;
+          }
+          return true;
+        }else if(state=="reg"){
+          var psw2=$('#psw_ensure').val();
+          if(username.length<3){
+            alert("用户名至少3字符");
+            return false;
+          }else if(username.match('^[a-zA-Z0-9_~!@#$%^&*-=+]*$')==null){
+            alert("用户名包含非法字符");
+            return false;
+          }
+          if(psw.length<6){
+            alert("密码至少6字符");
+            return false;
+          }else if(psw.match('^[a-zA-Z0-9_~!@#$%^&*-=+]*$')==null){
+            alert("密码包含非法字符");
+            return false;
+          }
+          if(psw2!=psw){
+            alert("两次密码不同");
+            return false;
+          }
+          return true;
+        }
+      }
+    </script>
+  </body>
+</html>

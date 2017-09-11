@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//cdn.muicss.com/mui-0.9.17/css/mui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//cdn.muicss.com/mui-0.9.17/js/mui.min.js"></script>
+    <title>订书</title>
+    <link rel="stylesheet" href="{{ css }}/order.css">
+    <!--link rel="stylesheet" href="../static/css/order.css"-->
+    <script src="{{js}}/jquery-3.2.1.min.js" charset="utf-8"></script>
+
+    <!--script src="../static/js/jquery-3.2.1.min.js" charset="utf-8"></script-->
+  </head>
+  <body>
+    <header class="mui-appbar mui--z">
+      <!--ul class="line_container"-->
+      <div class="mui-container">
+        <table width="100%">
+          <tbody><tr class="mui--appbar-height">
+            <td class="mui--text-title">自走订书机</td>
+            <td align="right">
+              <ul class="mui-list--inline mui--text-body2" style="margin-bottom:0px;">
+                <li style="font-size:24px;" id='username'>{{username}}</li>
+                <li>
+                  <form action="./logout" method="post">
+                    <button type="submit" name="logout-button" id="logout-button" class='mui-btn'>登出</button>
+                  </form>
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+      <!--/ul-->
+    </header>
+    <div class="display_body">
+      <ul class="mui-tabs__bar mui-tabs__bar--justified" style="padding-bottom: 12px;">
+        <li id='tab1' class="mui--is-active"><a data-mui-toggle="tab" data-mui-controls="pane-justified-1">第一专业</a></li>
+        <li id='tab2'><a data-mui-toggle="tab" data-mui-controls="pane-justified-2">第二专业</a></li>
+        <li id='tab3'><a data-mui-toggle="tab" data-mui-controls="pane-justified-3">任选课</a></li>
+        <li id='tab4'><a data-mui-toggle="tab" data-mui-controls="pane-justified-4">购物车</a></li>
+      </ul>
+      <div class="mui-tabs__pane mui--is-active" id="pane-justified-1">
+        <!--第一专业panel-->
+        <div class="mui-dropdown">
+          <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+            <text  id='dropdown_1_text'>请选择专业</text>
+            <span class="mui-caret"></span>
+          </button>
+          <!--Need render dynamically-->
+          <ul class="mui-dropdown__menu" id='dropdown_1'>
+            <li value="null"><a href="#">请选择专业</a></li>
+            {% for major in majors%}
+            <li value="{{major}}"><a href="#">{{major}}</a></li>
+            {% endfor %}
+          </ul>
+          <!--to here-->
+        </div>
+        <div class="booklist" style="margin:-48px auto auto auto;width:75%">
+          <table class="mui-table mui-table--bordered">
+            <thead>
+              <tr>
+                <th width='10%'>类别</th>
+                <th width='10%'>专业</th>
+                <th width='15%'>课程</th>
+                <th width='20%'>书名</th>
+                <th width='10%'>价格</th>
+                <th width='10%'>加入购物车</th>
+              </tr>
+            </thead>
+            <tbody id='table1'></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mui-tabs__pane" id="pane-justified-2">
+        <!--第二专业panel-->
+        <div class="mui-dropdown">
+          <button class="mui-btn mui-btn--primary" data-mui-toggle="dropdown">
+            <text  id='dropdown_2_text'>请选择专业</text>
+            <span class="mui-caret"></span>
+          </button>
+          <!--Need render dynamically-->
+          <ul class="mui-dropdown__menu" id='dropdown_2'>
+            <li value="null"><a href="#">请选择专业</a></li>
+            {% for major in majors%}
+            <li value="{{major}}"><a href="#">{{major}}</a></li>
+            {% endfor %}
+          </ul>
+          <!--to here-->
+        </div>
+        <div class="booklist" style="margin:-48px auto auto auto;width:75%">
+          <table class="mui-table mui-table--bordered">
+            <thead>
+              <tr>
+                <th width='10%'>类别</th>
+                <th width='10%'>专业</th>
+                <th width='15%'>课程</th>
+                <th width='20%'>书名</th>
+                <th width='10%'>价格</th>
+                <th width='10%'>加入购物车</th>
+              </tr>
+            </thead>
+            <!--Need render dynamically-->
+            <tbody  id='table2'></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mui-tabs__pane" id="pane-justified-3">
+        <!--任选panel-->
+        <div class="booklist" style="margin:auto;width:75%">
+          <table class="mui-table mui-table--bordered">
+            <thead>
+              <tr>
+                <th width='10%'>类别</th>
+                <th width='10%'>专业</th>
+                <th width='15%'>课程</th>
+                <th width='20%'>书名</th>
+                <th width='10%'>价格</th>
+                <th width='10%'>加入购物车</th>
+              </tr>
+            </thead>
+            <!--Need render dynamically-->
+            <tbody  id='table3'></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="mui-tabs__pane" id="pane-justified-4">
+        <!--购物车panel-->
+        <div class="booklist"  style='width:65%;margin:auto;'>
+          <table class="mui-table mui-table--bordered">
+            <thead>
+              <tr>
+                <th width='10%'>类别</th>
+                <th width='10%'>专业</th>
+                <th width='15%'>课程</th>
+                <th width='20%'>书名</th>
+                <th width='10%'>价格</th>
+                <th width='5%'>移除</th>
+              </tr>
+            </thead>
+            <!--Need render dynamically-->
+            <tbody  id='table4'></tbody>
+            <tfoot style="font-weight:700;">
+              <tr>
+                <td colspan='4'>总价</td>
+                <td id='totalprice'>---</td>
+                <td><button class="mui-btn mui-btn--primary" style='width:100%;' id='submit'>提交</button></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  <script src="{{js}}/order.js" charset="utf-8"></script>
+  </body>
+</html>
