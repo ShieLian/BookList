@@ -2,6 +2,7 @@
 自走订书机  
 ## 依赖：  
 python2.7  
+flask
 ## 使用说明：
 1.拿到书单，修改booklist.xlsx，并保存为csv，保持格式/keeping format  
 2.(如果书单与booklist.xlsx中不同，请先删掉books.json)  
